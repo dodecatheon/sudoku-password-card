@@ -1,0 +1,26 @@
+Sudoku-based password generator
+Copyright (C) 2008-2011   Louis G. "Ted" Stern.  All rights reserved
+
+To make this work, I use a simple preexisting sudoku solver to create
+a random sudoku solution.  The one I work with comes from here:
+
+	http://davidbau.com/downloads/sudoku.py
+	(via http://davidbau.com/about/hacks.html )
+
+You will have to download this file and put it in the same directory as
+sudoku_password_card.py for it to work.
+
+This generator prints out two boards adjacent to each other with 9 random
+passwords substituted in for digits 0-8 in each row.
+
+Each 9-char password has 2 ascii upper case, 3 ascii lower case, 2 digits,
+and 2 symbols.
+
+The resulting sudoku-permuted rows, columns and 3x3 cells are thus
+all strong passwords with uppercase, lowercase, digits and symbols.
+
+From one sudoku board you can therefore pick
+  rows & columns, forward & backward, 2 boards => 72 passwords
+  cells, RD, RU, LD, LU on 2 boards => 72 passwords
+
+Therefore, you can get 144 strong passwords from a two-board card.
