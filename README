@@ -1,6 +1,20 @@
 Sudoku-based password generator
 Copyright (C) 2008-2011   Louis G. "Ted" Stern.  All rights reserved
 
+Motivation:
+
+Try running simple_grid.py.  It prints out 9 9-character strong passwords, each
+with 2 symbols, 2 digits, 2 upper case and 3 lower case.  The passwords are
+printed horizontally.
+
+However, all you can get out of this is 9 strong passwords, or maybe 18 if you
+use some of them backwards.  If you read down, some of the columns won't have
+symbols or digits, or some columns will have too many.
+
+I wanted to find a way to make the columns be strong passwords too.  Then I
+noticed that this was the same kind of constraint you get in a solved
+Sudoku puzzle.
+
 To make this work, I use a simple preexisting sudoku solver to create
 a random sudoku solution.  The one I work with comes from here:
 
@@ -13,13 +27,20 @@ sudoku_password_card.py for it to work.
 This generator prints out two boards adjacent to each other with 9 random
 passwords substituted in for digits 0-8 in each row.
 
+To see how you can use this to generate a solved puzzle, run solved.py.
+Enter 'y' when you have seen enough solved boards.
+
+Then generate 9 passwords, sorted into the following order.
+
 Each 9-char password has 2 ascii upper case, 3 ascii lower case, 2 digits,
 and 2 symbols.
+
+Then use a solved sudoku puzzle to rearrange each password.
 
 The resulting sudoku-permuted rows, columns and 3x3 cells are thus
 all strong passwords with uppercase, lowercase, digits and symbols.
 
-From one sudoku board you can therefore pick
+From one sudoku board you can pick
   rows & columns, forward & backward, 2 boards => 72 passwords
   cells, RD, RU, LD, LU on 2 boards => 72 passwords
 
