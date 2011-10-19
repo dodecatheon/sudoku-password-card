@@ -3,7 +3,7 @@
 Just print a 9 x 9 grid of strong passwords
 """
 from string import ascii_uppercase, ascii_lowercase, digits, punctuation
-from random import choice, randint, shuffle
+from random import choice, shuffle
 
 def strong_password():
   # Return an 8 character string with

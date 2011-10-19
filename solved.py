@@ -3,7 +3,7 @@
 Print a solved sudoku puzzle
 """
 from string import ascii_uppercase, ascii_lowercase, digits, punctuation
-from random import choice, randint, shuffle
+from random import shuffle
 from sudoku import solution
 
 def sudoku_grid(board):
