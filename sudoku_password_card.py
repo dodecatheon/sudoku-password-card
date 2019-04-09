@@ -20,9 +20,9 @@ def sorted_password():
   # plus 2 digits, for a total of 7 characters.
   nbig = 2
   nsmall = 3
-  sp = ''.join( [choice(ascii_uppercase) for x in xrange(  nbig)] +
-                [choice(ascii_lowercase) for x in xrange(nsmall)] +
-                [choice(digits)          for x in xrange(2)] )
+  sp = ''.join( [choice(ascii_uppercase) for x in range(  nbig)] +
+                [choice(ascii_lowercase) for x in range(nsmall)] +
+                [choice(digits)          for x in range(2)] )
   return sp
 
 def password_grid(board):
@@ -34,14 +34,14 @@ def password_grid(board):
   punc = punc[:18]     # first 18 symbols in shuffle
 
   # Turn the board array into a square matrix (row-wise ordering)
-  bmatrix = [ board[i:i+9] for i in xrange(0,81,9) ]
+  bmatrix = [ board[i:i+9] for i in range(0,81,9) ]
 
   # Create the horizontal table divider
   divider = "+" + ("-" * 7 + "+") * 3
 
   out = []  # initialize list
 
-  for row in xrange(9):
+  for row in range(9):
 
     # Add a horizontal divider every 3 rows
     if row % 3 == 0:  out += [divider]
@@ -52,7 +52,7 @@ def password_grid(board):
     # Initialize the row string:
     rowstring = ""
 
-    for col in xrange(9):
+    for col in range(9):
 
       # Vertical divider every 3 columns
       if col % 3 == 0:  rowstring += "| "
@@ -77,9 +77,9 @@ def randomboard():
   answer = None
   while answer == None:
     # Seed the puzzle with randomly arranged 3x3 cells on the diagonal
-    cell11 = [i for i in xrange(9)]; shuffle(cell11)
-    cell22 = [i for i in xrange(9)]; shuffle(cell22)
-    cell33 = [i for i in xrange(9)]; shuffle(cell33)
+    cell11 = [i for i in range(9)]; shuffle(cell11)
+    cell22 = [i for i in range(9)]; shuffle(cell22)
+    cell33 = [i for i in range(9)]; shuffle(cell33)
     answer = solution(cell11[0:3] + [None]*6 +
                       cell11[3:6] + [None]*6 +
                       cell11[6:9] + [None]*9 +
@@ -93,7 +93,7 @@ def randomboard():
 
 def password_card():
   mycard = []
-  for i in xrange(2):
+  for i in range(2):
     mycard += [password_grid(randomboard())]
 
   ngrids = len(mycard)
@@ -101,8 +101,8 @@ def password_card():
 
   # convert the list of lists into one long string:
   mystring = '\n'.join([
-    ''.join([mycard[i][row] for i in xrange(ngrids)])
-    for row in xrange(nrows)])
+    ''.join([mycard[i][row] for i in range(ngrids)])
+    for row in range(nrows)])
 
   return mystring
 
@@ -111,22 +111,22 @@ if __name__ == "__main__":
   # Loop until the password card looks good enough
   while True:
     pcard = password_card()
-    print pcard
-    print
-    if raw_input("Like it? [y/N] ") in ['y','Y']: break
+    print(pcard)
+    print()
+    if input("Like it? [y/N] ") in ['y','Y']: break
 
   # Exit if no print desired.
-  if raw_input("Print it? [y/N] ") in ['y','Y']:
+  if input("Print it? [y/N] ") in ['y','Y']:
 
     # Print out 3 pages in large Courier14 for workstations,
     # and 3 pages in smaller Courier8 to laminate and keep in
     # your wallet or badge holder.
     font = ["Courier14", "Courier8"]
-    for i in xrange(2):
+    for i in range(2):
       # Pipe the pcard string into enscript to create 3 big pages:
       p = Popen("enscript -# 3 -f " + font[i],
                 shell=True,
                 stdin=PIPE,stdout=PIPE,stderr=PIPE)
 
       output, error = p.communicate(pcard)
-      print error.rstrip()
+      print(error.rstrip())
