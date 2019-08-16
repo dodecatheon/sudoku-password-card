@@ -1,16 +1,19 @@
 #!/usr/bin/env python
 """
-Copyright (C) 2008-2011, Louis G. "Ted" Stern
+Copyright (C) 2008-2019, Louis G. "Ted" Stern
 Sudoku-based password card generator.
 
 Uses sudoku.py from davidbau.com to generate solved puzzle.
 
 It was my first Python project, so be kind with your criticism :-).
+
+NOTE: if you have errors in the print, install enscript and ghostscript packages
 """
 from string import ascii_uppercase, ascii_lowercase, digits, punctuation
 from random import choice, randint, shuffle
 from subprocess import Popen, PIPE
 from sudoku import solution
+from datetime import datetime
 
 def sorted_password():
   # Return an 8 character string with
@@ -122,11 +125,15 @@ if __name__ == "__main__":
     # and 3 pages in smaller Courier8 to laminate and keep in
     # your wallet or badge holder.
     font = ["Courier14", "Courier8"]
+    suffix = ["large","small"]
+    datestring = str(datetime.now()).replace(" ","-").replace(":","-").replace(".","-")
+    cmdstr = "enscript -# 3 -f {} -p - | ps2pdf - sudoku_card_{}_{}.pdf"
+
     for i in range(2):
       # Pipe the pcard string into enscript to create 3 big pages:
-      p = Popen("enscript -# 3 -f " + font[i],
+      p = Popen(cmdstr.format(font[i],datestring,suffix[i]),
                 shell=True,
-                stdin=PIPE,stdout=PIPE,stderr=PIPE)
+                stdin=PIPE,stdout=PIPE,stderr=PIPE,encoding='utf8')
 
       output, error = p.communicate(pcard)
       print(error.rstrip())
